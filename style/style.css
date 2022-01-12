@@ -151,6 +151,27 @@ button{
     margin: 40px 0;
     font-size: 37px;
     user-select: none;
+    position: relative;
+}
+.main h1::after{
+    content: '';
+    width: 30px;
+    height: 6px;
+    background-color: rgb(125, 12, 255);
+    position: absolute;
+    border-radius: 50px;
+    top: 50%;
+    right: -40px;
+}
+.main h1::before{
+    content: '';
+    width: 30px;
+    height: 6px;
+    background-color: rgb(125, 12, 255);
+    position: absolute;
+    border-radius: 20px;
+    top: 50%;
+    left: -40px;
 }
 .products{
     width: 100%;
@@ -166,7 +187,12 @@ button{
     padding: 20px 25px;
     margin: 0 10px 25px 10px;
     border-radius: 15px;
-    box-shadow: 0 0 15px -1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 15px -1px rgba(0, 0, 0, 0.15);
+    transition: transform .2s, box-shadow .2s;
+}
+.products .product:hover{
+    transform: translate(0,-10px);
+    box-shadow: 0 0 15px -1px rgba(0, 0, 0, 0.35);
 }
 .products .product .title{
     display: flex;
@@ -183,11 +209,11 @@ button{
 .products .product .title span:nth-child(2){
     /* font-family: 'Mochiy Pop P One', sans-serif; */
     color: white;
-    background-color: rgb(255, 81, 12);
+    background-color: rgba(255, 81, 12, .9);
     padding: 8px;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 600;
 }
 .products .product .info{
@@ -216,4 +242,10 @@ button{
     margin-top: 15px;
     border-radius: 10px;
     cursor: pointer;
+    transition: color .2s, background-color .2s, border .2s;
+}
+.products .product .info button:hover{
+    color: rgb(125, 12, 255);
+    background-color: white;
+    border: 1px solid rgb(125, 12, 255);
 }
