@@ -18,7 +18,7 @@
     box-sizing: border-box;
 }
 body{
-    /* background-color: rgb(46, 46, 46); */
+    position: relative;
 }
 h1,h2,h3,h4,h5,h6{
     color: whitesmoke;
@@ -116,6 +116,7 @@ button{
     font-size: 23px;
     cursor: pointer;
 }
+
 .basket i{
     position: relative;
 }
@@ -242,10 +243,113 @@ button{
     margin-top: 15px;
     border-radius: 10px;
     cursor: pointer;
+    border: 2px solid rgb(125, 12, 255);
     transition: color .2s, background-color .2s, border .2s;
+    font-weight: 600;
 }
 .products .product .info button:hover{
     color: rgb(125, 12, 255);
     background-color: white;
-    border: 1px solid rgb(125, 12, 255);
+    border: 2px solid rgb(125, 12, 255);
+}
+/*-------------- Modal --------------*/
+.modal{
+    width: 450px;
+    height: auto;
+    background-color: rgb(236, 236, 236);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(125, 12, 255);
+    border-radius: 15px;
+    box-shadow: 0 0 15px -1px rgba(0, 0, 0, 0.40);
+    padding: 15px;
+    overflow: hidden;
+}
+.modal .modal-header{
+    font-size: 22px;
+    /* color: rgb(125, 12, 255); */
+    margin: 5px 0 20px 0;
+}
+.modal .added-Products{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    padding: 0 0 10px 0;
+    margin: 0 0 10px 0;
+}
+.modal .added-Products .product-img{
+    width: 20%;
+}
+.modal .added-Products .product-img img{
+    width: 100%;
+}
+.modal .added-Products .product-name{
+    /* color: black; */
+    user-select: none;
+}
+.modal .added-Products .product-name h3{
+    color: black;margin: 0 0 5px 0;
+}
+.modal .added-Products .product-number{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.modal .added-Products .product-number p{
+    margin: 7px 0;
+    user-select: none;
+}
+.modal .added-Products .product-number button:nth-child(1){
+    color: rgb(0, 165, 22);
+    cursor: pointer;
+}
+.modal .added-Products .product-number button:nth-child(3){
+    color: red;
+    cursor: pointer;
+}
+.modal .modal-Footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal .modal-Footer .total-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 50px 20px 0;
+}
+.modal .modal-Footer .buy-btns button:nth-child(1){
+    background-color: transparent;
+    border: 2px solid rgb(125, 12, 255);
+    border-radius: 5px;
+    padding: 6px 15px;
+    margin: 0 10px 0 0;
+    color: rgb(125, 12, 255);
+    font-weight: 600;
+    cursor: pointer;
+}
+.modal .modal-Footer .buy-btns button:nth-child(2){
+    background-color: rgb(125, 12, 255);
+    border: 2px solid rgb(125, 12, 255);
+    border-radius: 5px;
+    padding: 6px 15px;
+    margin: 0 10px 0 0;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+.modal .modal-Footer .buy-btns button{
+    transition: transform .3s;
+}
+.modal .modal-Footer .buy-btns button:hover{
+    transform: scale(1.13,1.13);
 }
