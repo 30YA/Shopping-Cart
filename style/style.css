@@ -270,6 +270,8 @@ button{
     box-shadow: 0 0 15px -1px rgba(0, 0, 0, 0.40);
     padding: 15px;
     overflow: hidden;
+    opacity: 0;
+    z-index: -10;
 }
 .modal .modal-header{
     font-size: 22px;
@@ -316,6 +318,21 @@ button{
     color: red;
     cursor: pointer;
 }
+.modal .added-Products .product-number button{
+    transition: transform .1s;
+}
+.modal .added-Products .product-number button:hover{
+    transform: scale(1.3,1.3);
+}
+.modal .added-Products i:nth-child(4){
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform .2s;
+}
+.modal .added-Products i:nth-child(4):hover{
+    transform: scale(1.3,1.3);
+}
 .modal .modal-Footer{
     display: flex;
     justify-content: center;
@@ -326,6 +343,9 @@ button{
     justify-content: center;
     align-items: center;
     margin: 20px 50px 20px 0;
+}
+.modal .modal-Footer .total-price p{
+    margin: 0 5px;
 }
 .modal .modal-Footer .buy-btns button:nth-child(1){
     background-color: transparent;
