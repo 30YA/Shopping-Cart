@@ -257,7 +257,7 @@ button{
     width: 450px;
     height: auto;
     background-color: rgb(236, 236, 236);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -271,7 +271,27 @@ button{
     padding: 15px;
     overflow: hidden;
     opacity: 0;
-    z-index: -10;
+    z-index: 10;
+    transition: opacity .3s ease-out;
+}
+.dark{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 10;
+    /* transition: opacity .5s ease-out; */
+}
+.close{
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: rgb(125, 12, 255);
+    font-size: 20px;
+    cursor: pointer;
 }
 .modal .modal-header{
     font-size: 22px;

@@ -76,3 +76,26 @@ function loadProducts(products,addtoMain) {
     }
     addtoMain.append(div);
 }
+//basket click : -------------------------------
+function openModal() {
+    const modal = document.querySelector('.modal');
+    const dark = document.querySelector('.dark');
+
+    modal.style.opacity = '1';
+    modal.style.zIndex = "11";
+
+    dark.style.display = 'block';
+    // modal.style.transition = "transition: transform .5s ease-out;"
+    // dark.style.opacity = '1';
+}
+function closeModal() {
+    const modal = document.querySelector('.modal');
+    const dark = document.querySelector('.dark');
+
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.zIndex = "-10";
+    },300)
+
+    dark.style.display = 'none';
+}
