@@ -54,18 +54,20 @@ const Allproducts = [
         off:'45 %',
         like: 263,
     }
-]
+];
+const cartProducts = localStorage.getItem('Cart')?
+JSON.parse(localStorage.getItem('Cart')):
+[];
 // -----------------------------------------------------
 const addtoMain = document.querySelector('.main');
 document.addEventListener('DOMContentLoaded', () => {
     const products = new Products();
     const ui = new UI();
     ui.displayProducts(products.getProducts());
-    ui.getAddToCartBTN();
+    ui.getAddToCartBTN(products.getProducts());
 })
 //basket click : -------------------------------
 const basket = document.querySelector('.basket');
 const close = document.querySelector('.close');
 basket.addEventListener('click', openModal);
 close.addEventListener('click', closeModal);
-

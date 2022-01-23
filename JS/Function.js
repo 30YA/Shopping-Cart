@@ -33,12 +33,35 @@ class UI {
         }
         addtoMain.append(div);
     }
-    getAddToCartBTN(){
+    getAddToCartBTN(products){
         const nodelist = document.querySelectorAll('.addToCart');
         const addToCart = [...nodelist];
         addToCart.forEach(btn => {
             const id = btn.dataset.id
+            const isInCart = cartProducts.find(item => {
+                return item.id == id;
+            })
+            if (isInCart) {
+                btn.textContent = 'in Cart';
+                btn.disabled = true;
+            }
+            btn.addEventListener('click', () => {
+                const findP = products.find(item => {
+                    return item.id == id;
+                })
+                findP.quantity = 1;
+                cartProducts.push(findP);
+                storage.saveCartProducts(cartProducts);
+                btn.textContent = 'in Cart';
+                btn.disabled = true;
+            })
         })
+    }
+}
+// save added products to cart :
+class storage {
+    static saveCartProducts(cartProducts){
+        localStorage.setItem('Cart',JSON.stringify(cartProducts))
     }
 }
 //basket click : -------------------------------
