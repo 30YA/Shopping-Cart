@@ -54,14 +54,55 @@ class UI {
                 storage.saveCartProducts(cartProducts);
                 btn.textContent = 'in Cart';
                 btn.disabled = true;
+                this.setCartValue(cartProducts);
+                this.cartUI(cartProducts);
+                document.querySelector('.empty').style.display = 'none';
             })
         })
+    }
+    setCartValue(cartProducts){
+        const total_item = document.querySelector('.total-item');
+        const total_Price = document.querySelector('.total-price');
+        let tempCartItem = 0;
+        const totalPrice = cartProducts.reduce((acc,cur) => {
+            tempCartItem += cur.quantity;
+            return acc + cur.price;
+        },0);
+        total_item.textContent = tempCartItem;
+        total_Price.textContent = `Total Price : ${totalPrice}`;
+    }
+    cartUI(cartProducts){
+        const modalproduct = document.querySelector('.modal-products');
+        modalproduct.innerHTML = '';
+        const list = [];
+        cartProducts.forEach(item => {
+            list.push(`
+            <div class="added-Products">
+              <div class="product-img">
+                <img src=${item.imgURL} alt="">
+              </div>
+              <div class="product-name">
+                <h3>${item.name}</h3>
+                <p class="price">${item.price} $</p>
+              </div>
+              <div class="product-number">
+                <button><i class="fas fa-plus"></i></button>
+                <p>2</p>
+                <button><i class="fas fa-minus"></i></button>
+              </div>
+              <i class="fas fa-trash-alt"></i>
+            </div>`
+            );
+        });
+        for(let key of list){
+            modalproduct.innerHTML += key;
+        }
     }
 }
 // save added products to cart :
 class storage {
     static saveCartProducts(cartProducts){
-        localStorage.setItem('Cart',JSON.stringify(cartProducts))
+        localStorage.setItem('Cart',JSON.stringify(cartProducts));
     }
 }
 //basket click : -------------------------------

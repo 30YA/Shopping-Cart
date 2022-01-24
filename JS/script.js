@@ -47,7 +47,7 @@ const Allproducts = [
     },
     {
         id: 6,
-        name: 'Sony T8',
+        name: 'Sony T800',
         description: 'Mirrorless Interchangeable Lens',
         price: 9000,
         imgURL: 'img/1.png',
@@ -58,13 +58,21 @@ const Allproducts = [
 const cartProducts = localStorage.getItem('Cart')?
 JSON.parse(localStorage.getItem('Cart')):
 [];
+console.log(cartProducts.length);
 // -----------------------------------------------------
 const addtoMain = document.querySelector('.main');
 document.addEventListener('DOMContentLoaded', () => {
+    if (cartProducts.length == 0) {
+        document.querySelector('.empty').style.display = 'block';
+    }else{
+        document.querySelector('.empty').style.display = 'none';
+    }
     const products = new Products();
     const ui = new UI();
     ui.displayProducts(products.getProducts());
     ui.getAddToCartBTN(products.getProducts());
+    ui.setCartValue(cartProducts);
+    ui.cartUI(cartProducts);
 })
 //basket click : -------------------------------
 const basket = document.querySelector('.basket');
