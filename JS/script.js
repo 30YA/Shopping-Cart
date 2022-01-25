@@ -58,24 +58,21 @@ const Allproducts = [
 const cartProducts = localStorage.getItem('Cart')?
 JSON.parse(localStorage.getItem('Cart')):
 [];
-console.log(cartProducts.length);
 // -----------------------------------------------------
 const addtoMain = document.querySelector('.main');
 document.addEventListener('DOMContentLoaded', () => {
-    if (cartProducts.length == 0) {
-        document.querySelector('.empty').style.display = 'block';
-    }else{
-        document.querySelector('.empty').style.display = 'none';
-    }
     const products = new Products();
     const ui = new UI();
     ui.displayProducts(products.getProducts());
     ui.getAddToCartBTN(products.getProducts());
     ui.setCartValue(cartProducts);
     ui.cartUI(cartProducts);
+    ui.getDeleteBTN();
 })
 //basket click : -------------------------------
 const basket = document.querySelector('.basket');
 const close = document.querySelector('.close');
+const confirm = document.querySelector('.confirm');
 basket.addEventListener('click', openModal);
 close.addEventListener('click', closeModal);
+confirm.addEventListener('click', closeModal);

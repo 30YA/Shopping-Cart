@@ -32,6 +32,7 @@ class UI {
             div.innerHTML += key;
         }
         addtoMain.append(div);
+        this.cardIsempty(cartProducts);
     }
     getAddToCartBTN(products){
         const nodelist = document.querySelectorAll('.addToCart');
@@ -56,20 +57,35 @@ class UI {
                 btn.disabled = true;
                 this.setCartValue(cartProducts);
                 this.cartUI(cartProducts);
-                document.querySelector('.empty').style.display = 'none';
+                this.cardIsempty(cartProducts);
             })
         })
+    }
+    getDeleteBTN(){
+        // const delBtns = document.querySelectorAll('.fa-trash-alt')
+        // console.log(delBtns);
     }
     setCartValue(cartProducts){
         const total_item = document.querySelector('.total-item');
         const total_Price = document.querySelector('.total-price');
+        const clear = document.querySelector('.clear');
         let tempCartItem = 0;
-        const totalPrice = cartProducts.reduce((acc,cur) => {
+        let totalPrice = cartProducts.reduce((acc,cur) => {
             tempCartItem += cur.quantity;
             return acc + cur.price;
         },0);
         total_item.textContent = tempCartItem;
-        total_Price.textContent = `Total Price : ${totalPrice}`;
+        total_Price.textContent = `Total Price : ${totalPrice}$`;
+        clear.addEventListener('click', () => {
+            cartProducts.splice(0,cartProducts.length);
+            totalPrice = 0;
+            total_Price.textContent = `Total Price : 0$`;
+            tempCartItem = 0;
+            total_item.textContent = tempCartItem;
+            storage.saveCartProducts(cartProducts);
+            this.cartUI(cartProducts);
+            this.cardIsempty(cartProducts);
+        })
     }
     cartUI(cartProducts){
         const modalproduct = document.querySelector('.modal-products');
@@ -87,7 +103,7 @@ class UI {
               </div>
               <div class="product-number">
                 <button><i class="fas fa-plus"></i></button>
-                <p>2</p>
+                <p>${item.quantity}</p>
                 <button><i class="fas fa-minus"></i></button>
               </div>
               <i class="fas fa-trash-alt"></i>
@@ -96,6 +112,13 @@ class UI {
         });
         for(let key of list){
             modalproduct.innerHTML += key;
+        }
+    }
+    cardIsempty(cartProducts){
+        if (cartProducts.length == 0) {
+            document.querySelector('.empty').style.display = 'block';
+        }else{
+            document.querySelector('.empty').style.display = 'none';
         }
     }
 }
