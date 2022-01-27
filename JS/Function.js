@@ -27,13 +27,21 @@ class UI {
             </div>`
             );
         });
-        const div = document.createElement('div');
-        div.classList = 'products';
         for(let key of list){
-            div.innerHTML += key;
+            addtoMain.innerHTML += key;
         }
-        addtoMain.append(div);
         this.cardIsempty(cartProducts);
+    }
+    searchInput(products){
+        const search = document.querySelector('.txt');
+        search.addEventListener('input',() => {
+            const filteredP = products.filter(item => {
+                return item.name.toLowerCase().includes(search.value.toLowerCase());
+            })
+            document.querySelector('.products').innerHTML = '';
+            this.displayProducts(filteredP);
+            this.getAddToCartBTN(filteredP);
+        })
     }
     getAddToCartBTN(products){
         const addToCart = [...document.querySelectorAll('.addToCart')];
@@ -95,7 +103,7 @@ class UI {
         let tempCartItem = 0;
         let totalPrice = cartProducts.reduce((acc,cur) => {
             tempCartItem += cur.quantity;
-            return acc + cur.price;
+            return acc + (cur.price * cur.quantity);
         },0);
         total_item.textContent = tempCartItem;
         total_Price.textContent = `Total Price : ${totalPrice}$`;
@@ -134,9 +142,9 @@ class UI {
                 <p class="price">${item.price} $</p>
               </div>
               <div class="product-number">
-                <button><i class="fas fa-plus"></i></button>
+                <button><i class="fas fa-plus" data-id="${item.id}"></i></button>
                 <p>${item.quantity}</p>
-                <button><i class="fas fa-minus"></i></button>
+                <button><i class="fas fa-minus" data-id="${item.id}"></i></button>
               </div>
               <i class="fas fa-trash-alt" data-id="${item.id}"></i>
             </div>`
@@ -146,6 +154,7 @@ class UI {
             modalproduct.innerHTML += key;
         }
         this.getDeleteBTN(cartProducts);
+        this.cartLogic(cartProducts);
     }
     cardIsempty(cartProducts){
         if (cartProducts.length == 0) {
@@ -153,6 +162,33 @@ class UI {
         }else{
             document.querySelector('.empty').style.display = 'none';
         }
+    }
+    cartLogic(cartProducts){
+        const added_products = [...document.querySelectorAll('.added-Products')]
+        added_products.forEach(item => {
+            item.addEventListener('click',e => {
+                const mp = e.target;
+                if (mp.classList.contains('fa-plus')) {
+                    const findP = cartProducts.find(item => {
+                        return item.id == mp.dataset.id;
+                    })
+                    ++findP.quantity;
+                    storage.saveCartProducts(cartProducts);
+                    this.cartUI(cartProducts);
+                    this.setCartValue(cartProducts);
+                }
+                if (mp.classList.contains('fa-minus')) {
+                    const findP = cartProducts.find(item => {
+                        return item.id == mp.dataset.id;
+                    })
+                    --findP.quantity;
+                    storage.saveCartProducts(cartProducts);
+                    this.cartUI(cartProducts);
+                    this.setCartValue(cartProducts);
+                }
+            })
+        })
+        // console.log(added_products);
     }
 }
 // save added products to cart :

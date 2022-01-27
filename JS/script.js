@@ -59,11 +59,12 @@ const cartProducts = localStorage.getItem('Cart')?
 JSON.parse(localStorage.getItem('Cart')):
 [];
 // -----------------------------------------------------
-const addtoMain = document.querySelector('.main');
+const addtoMain = document.querySelector('.products');
 document.addEventListener('DOMContentLoaded', () => {
     const products = new Products();
     const ui = new UI();
     ui.displayProducts(products.getProducts());
+    ui.searchInput(products.getProducts());
     ui.getAddToCartBTN(products.getProducts());
     ui.setCartValue(cartProducts);
     ui.cartUI(cartProducts);
