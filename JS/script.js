@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.getAddToCartBTN(products.getProducts());
     ui.setCartValue(cartProducts);
     ui.cartUI(cartProducts);
-    ui.getDeleteBTN();
 })
 //basket click : -------------------------------
 const basket = document.querySelector('.basket');

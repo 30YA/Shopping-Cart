@@ -6,6 +6,7 @@ class Products{
         return Allproducts;
     }
 }
+let DOMBtns = [];
 // display products :
 class UI {
     displayProducts(products){
@@ -35,8 +36,8 @@ class UI {
         this.cardIsempty(cartProducts);
     }
     getAddToCartBTN(products){
-        const nodelist = document.querySelectorAll('.addToCart');
-        const addToCart = [...nodelist];
+        const addToCart = [...document.querySelectorAll('.addToCart')];
+        DOMBtns = addToCart;
         addToCart.forEach(btn => {
             const id = btn.dataset.id
             const isInCart = cartProducts.find(item => {
@@ -45,6 +46,9 @@ class UI {
             if (isInCart) {
                 btn.textContent = 'in Cart';
                 btn.disabled = true;
+            }else{
+                btn.textContent = 'add to cart';
+                btn.disabled = false;
             }
             btn.addEventListener('click', () => {
                 const findP = products.find(item => {
@@ -61,9 +65,28 @@ class UI {
             })
         })
     }
-    getDeleteBTN(){
-        // const delBtns = document.querySelectorAll('.fa-trash-alt')
+    getDeleteBTN(cartProducts){
+        const delBtns = [...document.querySelectorAll('.fa-trash-alt')]
         // console.log(delBtns);
+        delBtns.forEach(TrashBtn => {
+            TrashBtn.addEventListener('click',trashBtn => {
+                // console.log(trashBtn.target.dataset.id);
+                const findP = cartProducts.findIndex(item => {
+                    return item.id == trashBtn.target.dataset.id
+                })
+                cartProducts.splice(findP,1);
+                storage.saveCartProducts(cartProducts);
+                this.cartUI(cartProducts);
+                this.setCartValue(cartProducts);
+                this.cardIsempty(cartProducts);
+                //this section for turn back (in cart) btns to (add to cart):
+                const findP2 = DOMBtns.find(item => {
+                    return item.dataset.id == trashBtn.target.dataset.id;
+                })
+                findP2.textContent = 'add to cart';
+                findP2.disabled = false;
+            })
+        })
     }
     setCartValue(cartProducts){
         const total_item = document.querySelector('.total-item');
@@ -76,15 +99,24 @@ class UI {
         },0);
         total_item.textContent = tempCartItem;
         total_Price.textContent = `Total Price : ${totalPrice}$`;
+        //clear cart : ---
         clear.addEventListener('click', () => {
             cartProducts.splice(0,cartProducts.length);
             totalPrice = 0;
-            total_Price.textContent = `Total Price : 0$`;
+            total_Price.textContent = `Total Price : ${totalPrice}$`;
             tempCartItem = 0;
             total_item.textContent = tempCartItem;
             storage.saveCartProducts(cartProducts);
             this.cartUI(cartProducts);
             this.cardIsempty(cartProducts);
+            //this section for turn back (in cart) btns to (add to cart):
+            const nodelist = document.querySelectorAll('.addToCart');
+            const addToCart = [...nodelist];
+            addToCart.forEach(btn => {
+                btn.textContent = 'add to cart';
+                btn.disabled = false;
+            })
+            
         })
     }
     cartUI(cartProducts){
@@ -106,13 +138,14 @@ class UI {
                 <p>${item.quantity}</p>
                 <button><i class="fas fa-minus"></i></button>
               </div>
-              <i class="fas fa-trash-alt"></i>
+              <i class="fas fa-trash-alt" data-id="${item.id}"></i>
             </div>`
             );
         });
         for(let key of list){
             modalproduct.innerHTML += key;
         }
+        this.getDeleteBTN(cartProducts);
     }
     cardIsempty(cartProducts){
         if (cartProducts.length == 0) {
